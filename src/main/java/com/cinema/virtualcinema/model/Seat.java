@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "seats")
 public class Seat {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "uniqid")
@@ -21,9 +21,6 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
-
-    @Column(name = "is_taken")
-    private boolean isTaken;
 
     public Room getRoom() {
         return room;
@@ -53,14 +50,6 @@ public class Seat {
 
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
-    }
-
-    public boolean isTaken() {
-        return isTaken;
-    }
-
-    public void setTaken(boolean taken) {
-        isTaken = taken;
     }
 
     public String getUniqueId() {

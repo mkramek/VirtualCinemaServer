@@ -53,7 +53,6 @@ public class SeatController {
     public ResponseEntity<Seat> updateSeatByUniqueID(@PathVariable("uid") String uniqueID, @RequestBody Seat newSeat) {
         Optional<Seat> seat = seatRepository.findByUniqueId(uniqueID);
         if (seat.isPresent()) {
-            seat.get().setTaken(newSeat.isTaken());
             final Seat updatedSeat = seatRepository.save(seat.get());
             return new ResponseEntity<>(updatedSeat, HttpStatus.OK);
         } else {
