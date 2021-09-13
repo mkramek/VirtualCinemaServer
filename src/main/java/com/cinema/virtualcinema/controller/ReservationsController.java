@@ -118,4 +118,14 @@ public class ReservationsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/reservation/{id}")
+    public ResponseEntity<String> deleteReservation(@PathVariable("id") Long reservationId) {
+        try {
+            reservationRepository.deleteById(reservationId);
+            return new ResponseEntity<>("Reservation deleted", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
