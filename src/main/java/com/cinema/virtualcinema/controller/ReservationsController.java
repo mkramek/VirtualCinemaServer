@@ -122,7 +122,16 @@ public class ReservationsController {
     @DeleteMapping("/reservation/{id}")
     public ResponseEntity<String> deleteReservation(@PathVariable("id") Long reservationId) {
         try {
-            reservationRepository.deleteById(reservationId);
+            Optional<Reservation> toDelete = reservationRepository.findById(reservationId);
+            if (toDelete.isPresent()) {
+                Optional<SeatStatus> status = statusRepository.findBySeat(toDelete.get().getSeat());
+                if (status.isPresent()) {
+                    SeatStatus toSave = status.get();
+                    toSave.setStatus(0);
+                    statusRepository.save(toSave);
+                }
+                reservationRepository.deleteById(toDelete.get().getId());
+            }
             return new ResponseEntity<>("Reservation deleted", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

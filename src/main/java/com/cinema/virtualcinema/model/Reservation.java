@@ -19,6 +19,10 @@ public class Reservation {
 
     public Reservation() {}
 
+    public Long getId() {
+        return id;
+    }
+
     public String getUser() {
         return user;
     }
